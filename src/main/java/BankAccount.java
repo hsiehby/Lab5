@@ -20,7 +20,7 @@ public class BankAccount {
     }
 
     private int accountNumber;
-    public BankAccountType accountType;
+    private BankAccountType accountType;
     private double accountBalance;
     private String ownerName;
     public double interestRate;
@@ -30,9 +30,36 @@ public class BankAccount {
         /*
          * Implement this function
          */
+        this.ownerName = name;
+        this.accountType = accountCategory;
+        Bank.totalAccounts++;
     }
 
     /*
      * Implement getters and setters as appropriate for private variables.
      */
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+    public double getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void printBalance() {
+        System.out.printf("Balance in %s's %s account: %.2f\n", this.ownerName, this.accountType, this.accountBalance);
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public BankAccountType getAccountType() {
+        return accountType;
+    }
 }

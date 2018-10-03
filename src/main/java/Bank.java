@@ -29,6 +29,18 @@ public class Bank {
         /*
          * Implement this function
          */
+        if (bankAccount.getAccountBalance() < amount) {
+            System.out.println("Transaction failed: Balance in the account is lesser than the amount to withdraw");
+            return false;
+        }
+        if (amount <= 0) {
+            System.out.println("Transaction failed: Amount must be greater than zero");
+            return false;
+        }
+        bankAccount.setAccountBalance(bankAccount.getAccountBalance() - amount);
+        System.out.printf("Successfully withdrew %.2f from %s's %s account\n", amount, bankAccount.getOwnerName(), bankAccount.getAccountType());
+        bankAccount.printBalance();
+        return true;
     }
 
     /**
@@ -45,6 +57,15 @@ public class Bank {
         /*
          * Implement this function
          */
+        if (amount <= 0) {
+            System.out.println("Transaction failed: Amount must be greater than zero");
+            return false;
+        } else {
+            bankAccount.setAccountBalance(bankAccount.getAccountBalance() + amount);
+            System.out.printf("Successfully deposited %.2f into %s's %s account\n", amount, bankAccount.getOwnerName(), bankAccount.getAccountType());
+            bankAccount.printBalance();
+            return true;
+        }
     }
 
     /**
@@ -64,6 +85,21 @@ public class Bank {
         /*
          * Implement this function
          */
+        if (amount <= 0) {
+            System.out.println("Transaction failed: Amount must be greater than zero");
+            return false;
+        } else if (source.getAccountBalance() < amount) {
+            System.out.println("Transaction failed: Balance in the source account is insufficient");
+            return false;
+        } else {
+            source.setAccountBalance(source.getAccountBalance() - amount);
+            destination.setAccountBalance(destination.getAccountBalance() + amount);
+
+            System.out.printf("Successfully transferred %.2f from %s's %s account to %s's %s account\n", amount, source.getOwnerName(), source.getAccountType(), destination.getOwnerName(), destination.getAccountType());
+            source.printBalance();
+            destination.printBalance();
+            return true;
+        }
     }
 
     /**
@@ -77,6 +113,7 @@ public class Bank {
         /*
          * Implement this function
          */
+        bankAccount.setOwnerName(name);
     }
 
     public static int totalAccounts = 0;
@@ -89,6 +126,7 @@ public class Bank {
         /*
          * Implement this function
          */
+        return totalAccounts;
     }
 
     /**
@@ -112,6 +150,7 @@ public class Bank {
         // Deposit money to both accounts and print new balance
         bank.depositMoney(account1, 1000.0);
         bank.depositMoney(account2, 5000.0);
+        System.out.println();
 
         // Withdraw money from Account 2 and print new balance
         bank.withdrawMoney(account2, 200.0);
@@ -122,5 +161,10 @@ public class Bank {
         // Print number of accounts
         System.out.print("Number of active accounts at " + bank.bankName + " are ");
         System.out.println(Bank.totalAccounts);
+
+        bank.transferMoney(account1, account2, 1009213213);
+        bank.transferMoney(account1, account2, -50);
+        bank.transferMoney(account1, account2, 0);
+        bank.transferMoney(account1, account2, 1013);
     }
 }
